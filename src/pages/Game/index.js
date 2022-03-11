@@ -1,5 +1,6 @@
 import React from 'react';
 import { fetchToken } from '../../services/Api';
+import Header from '../Header';
 
 class Game extends React.Component {
   componentDidMount = async () => {
@@ -9,7 +10,10 @@ class Game extends React.Component {
 
   render() {
     return (
-      <h1>TRIVIA</h1>
+      <div>
+        <h1>TRIVIA</h1>
+        <Header />
+      </div>
     );
   }
 }
