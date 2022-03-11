@@ -10,15 +10,11 @@ class Game extends React.Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <h1>TRIVIA</h1>
-=======
 
       <div>
         <h1>TRIVIA</h1>
         <Header />
       </div>
->>>>>>> refs/remotes/origin/requisito/3
     );
   }
 }
