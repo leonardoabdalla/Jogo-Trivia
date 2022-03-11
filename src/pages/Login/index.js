@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
-// import { fetchToken } from '../../services/Api';
+import { MdSettings } from 'react-icons/md';
 import { getLogin, getTokenAPI } from '../../actions';
-// import { fetchApi } from '../../services';
 
 class Login extends Component {
   constructor() {
@@ -42,6 +40,7 @@ class Login extends Component {
 
   render() {
     const { name, email, buttonDisable } = this.state;
+    const { history } = this.props;
     return (
       <div>
         <form>
@@ -51,7 +50,6 @@ class Login extends Component {
             type="text"
             name="name"
             value={ name }
-            // validation="validName"
             onChange={ this.handleChange }
           />
           <input
@@ -60,7 +58,6 @@ class Login extends Component {
             type="email"
             name="email"
             value={ email }
-            // validation="validEmail"
             onChange={ this.handleChange }
           />
           <button
@@ -70,9 +67,16 @@ class Login extends Component {
             }
             disabled={ !buttonDisable }
             data-testid="btn-play"
+            text=""
           >
             Play
           </button>
+          <div>
+            <MdSettings
+              data-testId="btn-settings"
+              onClick={ () => history.push('/settings') }
+            />
+          </div>
         </form>
       </div>
     );

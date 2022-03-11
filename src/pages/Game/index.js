@@ -1,5 +1,4 @@
 import React from 'react';
-// import { connect } from 'react-redux';
 import { fetchToken } from '../../services/Api';
 
 class Game extends React.Component {
