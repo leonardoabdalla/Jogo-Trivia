@@ -1,8 +1,6 @@
 import React from 'react';
 import { fetchToken } from '../../services/Api';
 
-import Header from '../../components/Header';
-
 class Game extends React.Component {
   componentDidMount = async () => {
     const apei = await fetchToken();
@@ -11,9 +9,7 @@ class Game extends React.Component {
 
   render() {
     return (
-      <>
-        <h1>TRIVIA</h1>
-      </>
+      <h1>TRIVIA</h1>
     );
   }
 }
