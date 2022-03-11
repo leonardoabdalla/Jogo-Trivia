@@ -3,23 +3,20 @@ import { connect } from 'react-redux';
 // import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 // import { fetchToken } from '../../services/Api';
-import { getTokenAPI } from '../../actions';
+import { getLogin, getTokenAPI } from '../../actions';
+// import { fetchApi } from '../../services';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       name: '',
       email: '',
       buttonDisable: false,
-      // game: false,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.validatedUser = this.validatedUser.bind(this);
-    this.goToGame = this.goToGame.bind(this);
   }
 
-  validatedUser() {
+  validatedUser = () => {
     const { name, email } = this.state;
     const emailRegex = /\S+@\S+\.\S+/;
     const PASSWORD_MIN__LENGTH = 2;
@@ -29,26 +26,22 @@ class Login extends Component {
     });
   }
 
-  handleChange({ target: { value, name } }) {
+  handleChange = ({ target: { value, name } }) => {
     this.setState({
       [name]: value,
-    }, this.validatedUser());
+    }, this.validatedUser);
   }
 
-  async goToGame() {
-    // this.setState({ game: true });
-    const { history, fetchToken } = this.props;
+  goToGame = async () => {
+    const { name, email } = this.state;
+    const { history, dispatch } = this.props;
+    dispatch(getTokenAPI());
+    dispatch(getLogin({ email, name }));
     history.push('/game');
-
-    await fetchToken();
   }
 
   render() {
     const { name, email, buttonDisable } = this.state;
-    // const { getTokenAPI } = this.props;
-    // if (game) {
-    //   return <Redirect to="/game" />;
-    // }
     return (
       <div>
         <form>
@@ -58,7 +51,7 @@ class Login extends Component {
             type="text"
             name="name"
             value={ name }
-            validation="validName"
+            // validation="validName"
             onChange={ this.handleChange }
           />
           <input
@@ -67,7 +60,7 @@ class Login extends Component {
             type="email"
             name="email"
             value={ email }
-            validation="validEmail"
+            // validation="validEmail"
             onChange={ this.handleChange }
           />
           <button
@@ -86,12 +79,9 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchToken: () => dispatch(getTokenAPI()),
-});
 Login.propTypes = {
-  fetchToken: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect()(Login);

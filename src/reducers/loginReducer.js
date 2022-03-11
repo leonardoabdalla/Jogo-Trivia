@@ -1,16 +1,20 @@
-import { GET_TOKEN } from '../actions/index';
+import { LOGIN } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
-  userName: '',
-  token: '',
-  isRedirect: false,
+  gravatarEmail: '',
+  name: '',
+  assertions: 0,
+  score: 0,
 };
 
 function loginReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case GET_TOKEN:
-    return { ...state, payload: action.payload.token };
+  case LOGIN:
+    return {
+      ...state,
+      gravatarEmail: action.payload.email,
+      name: action.payload.name,
+    };
   default:
     return state;
   }
