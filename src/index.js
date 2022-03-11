@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
@@ -9,12 +9,11 @@ import * as serviceWorker from './serviceWorker';
 import store from './store/store';
 
 ReactDOM.render(
-
-  <BrowserRouter>
-    <Provider store={ store }>
+  <Provider store={ store }>
+    <BrowserRouter>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>,
 
   document.getElementById('root'),
 

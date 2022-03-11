@@ -1,13 +1,22 @@
+import { LOGIN } from '../actions';
+
 const INITIAL_STATE = {
+  gravatarEmail: '',
   name: '',
-  email: '',
+  assertions: 0,
+  score: 0,
 };
 
-const loginReducer = (state = INITIAL_STATE, action) => {
+function loginReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+  case LOGIN:
+    return {
+      ...state,
+      gravatarEmail: action.payload.email,
+      name: action.payload.name,
+    };
   default:
     return state;
   }
-};
-
+}
 export default loginReducer;

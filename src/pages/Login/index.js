@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+// import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+// import { fetchToken } from '../../services/Api';
+import { getLogin, getTokenAPI } from '../../actions';
+// import { fetchApi } from '../../services';
 
 class Login extends Component {
   constructor() {
@@ -6,32 +12,36 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
-      // validName: false,
-      // validEmail: false,
-      buttonDisable: true,
+      buttonDisable: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ target }) {
-    const { value, name } = target;
-    this.setState({
-      [name]: value,
-    }, this.handleClick);
-  }
-
-  handleClick() {
+  validatedUser = () => {
     const { name, email } = this.state;
-    const validationButton = (name.length > 0 && email.length > 0);
+    const emailRegex = /\S+@\S+\.\S+/;
+    const PASSWORD_MIN__LENGTH = 2;
     this.setState({
-      buttonDisable: !validationButton,
+      buttonDisable: email.match(emailRegex)
+        && name.length > PASSWORD_MIN__LENGTH,
     });
   }
 
+  handleChange = ({ target: { value, name } }) => {
+    this.setState({
+      [name]: value,
+    }, this.validatedUser);
+  }
+
+  goToGame = async () => {
+    const { name, email } = this.state;
+    const { history, dispatch } = this.props;
+    dispatch(getTokenAPI());
+    dispatch(getLogin({ email, name }));
+    history.push('/game');
+  }
+
   render() {
-    const { buttonDisable } = this.state;
+    const { name, email, buttonDisable } = this.state;
     return (
       <div>
         <form>
@@ -40,8 +50,8 @@ class Login extends Component {
             data-testid="input-player-name"
             type="text"
             name="name"
-            validation="validName"
-            // value={ name }
+            value={ name }
+            // validation="validName"
             onChange={ this.handleChange }
           />
           <input
@@ -49,14 +59,16 @@ class Login extends Component {
             data-testid="input-gravatar-email"
             type="email"
             name="email"
-            validation="validEmail"
-            // value={ email }
+            value={ email }
+            // validation="validEmail"
             onChange={ this.handleChange }
           />
           <button
             type="button"
-            onClick={ this.handleClick }
-            disabled={ buttonDisable }
+            onClick={
+              this.goToGame
+            }
+            disabled={ !buttonDisable }
             data-testid="btn-play"
           >
             Play
@@ -66,4 +78,10 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default connect()(Login);
