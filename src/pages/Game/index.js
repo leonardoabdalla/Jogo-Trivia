@@ -10,6 +10,7 @@ class Game extends React.Component {
 
   render() {
     return (
+
       <div>
         <h1>TRIVIA</h1>
         <Header />

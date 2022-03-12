@@ -67,7 +67,6 @@ class Login extends Component {
             }
             disabled={ !buttonDisable }
             data-testid="btn-play"
-            text=""
           >
             Play
           </button>
