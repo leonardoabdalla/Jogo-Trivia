@@ -39,7 +39,6 @@ class Game extends React.Component {
       <>
         <h1>TRIVIA</h1>
         <p>Questions</p>
-        <p>{questions[0].category}</p>
       </>
     );
   }
