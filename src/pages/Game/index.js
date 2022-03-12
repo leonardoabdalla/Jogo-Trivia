@@ -1,17 +1,48 @@
 import React from 'react';
-import { fetchToken } from '../../services/Api';
+import { connect } from 'react-redux';
+import { fetchQuestions } from '../../services/Api';
+import { getTokenAPI } from '../../actions';
 
 class Game extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      questions: [],
+      questionIndex: 0,
+    };
+  }
+
   componentDidMount = async () => {
-    const apei = await fetchToken();
-    console.log(apei);
+    const { dispatch } = this.props;
+    const token = localStorage.getItem('token');
+    console.log(token);
+    let questionsApi = await fetchQuestions(token);
+
+    // verifica se o token expirou
+    const expiredToken = 3;
+    if (questionsApi.response_code === expiredToken) {
+      // se ele expirou, realiza uma nova requisição de token
+      await dispatch(getTokenAPI());
+      const newToken = localStorage.getItem('token');
+      // realiza a requisição das questões com o novo token
+      questionsApi = await fetchQuestions(newToken);
+    }
+    this.setState({
+      questions: questionsApi.results,
+    });
   }
 
   render() {
+    const { questions } = this.state;
+    console.log(questions);
     return (
-      <h1>TRIVIA</h1>
+      <>
+        <h1>TRIVIA</h1>
+        <p>Questions</p>
+        <p>{questions[0].category}</p>
+      </>
     );
   }
 }
 
-export default Game;
+export default connect()(Game);
