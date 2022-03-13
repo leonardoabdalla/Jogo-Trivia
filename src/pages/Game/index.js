@@ -1,47 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchQuestions } from '../../services/Api';
-import { getTokenAPI } from '../../actions';
+import PropTypes from 'prop-types';
+
+import { getQuestionsThunkApi } from '../../redux/actions';
+import Question from '../../components/Question';
+import Header from '../Header';
 
 class Game extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      questions: [],
-      questionIndex: 0,
-    };
-  }
-
-  componentDidMount = async () => {
-    const { dispatch } = this.props;
-    const token = localStorage.getItem('token');
-    console.log(token);
-    let questionsApi = await fetchQuestions(token);
-
-    // verifica se o token expirou
-    const expiredToken = 3;
-    if (questionsApi.response_code === expiredToken) {
-      // se ele expirou, realiza uma nova requisição de token
-      await dispatch(getTokenAPI());
-      const newToken = localStorage.getItem('token');
-      // realiza a requisição das questões com o novo token
-      questionsApi = await fetchQuestions(newToken);
+  componentDidMount() {
+    const { getQuestions } = this.props;
+    if (localStorage.token) {
+      getQuestions(localStorage.token);
     }
-    this.setState({
-      questions: questionsApi.results,
-    });
   }
 
   render() {
-    const { questions } = this.state;
-    console.log(questions);
+    const { isLoading } = this.props;
+    if (isLoading) {
+      return (<Header />);
+    }
     return (
-      <>
-        <h1>TRIVIA</h1>
-        <p>Questions</p>
-      </>
+      <div>
+        <Header />
+        <Question />
+      </div>
+
     );
   }
 }
+const mapStateToProps = (state) => ({
+  questions: state.questions.questions,
+  isLoading: state.questions.isLoading,
+});
 
-export default connect()(Game);
+const mapDispatchToProps = (dispatch) => ({
+  getQuestions: (token) => dispatch(getQuestionsThunkApi(token)),
+});
+
+Game.propTypes = {
+  getQuestions: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

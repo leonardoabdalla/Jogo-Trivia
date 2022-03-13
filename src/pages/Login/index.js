@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MdSettings } from 'react-icons/md';
-import { getLogin, getTokenAPI } from '../../actions';
+import { getLogin, getTokenAPI } from '../../redux/actions/index';
 
 class Login extends Component {
   constructor() {
