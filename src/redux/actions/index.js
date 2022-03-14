@@ -39,11 +39,6 @@ const requestToken = () => ({
   type: REQUEST_TOKEN,
 });
 
-/* const requestTokenSucess = (payload) => ({
-  type: REQUEST_TOKEN_SUCESS,
-  payload,
-}); */
-
 const requestTokenFailed = (error) => ({
   type: REQUEST_TOKEN_FAIL,
   payload: error,
@@ -65,6 +60,7 @@ export const getTokenAPI = () => async (dispatch) => {
     dispatch(requestToken());
     const fetchApiToken = await fetch('https://opentdb.com/api_token.php?command=request');
     const result = await fetchApiToken.json();
+    localStorage.setItem('token', result.token);
     dispatch(getQuestionsThunkApi(result.token));
     dispatch(getToken(result.token));
   } catch (error) {

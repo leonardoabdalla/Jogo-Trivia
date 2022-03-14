@@ -2,15 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getQuestionsThunkApi } from '../../redux/actions';
 import Question from '../../components/Question';
 import Header from '../Header';
+import { fetchQuestions } from '../../services/Api';
+import { getTokenAPI } from '../../redux/actions';
 
 class Game extends React.Component {
-  componentDidMount() {
-    const { getQuestions } = this.props;
-    if (localStorage.token) {
-      getQuestions(localStorage.token);
+  componentDidMount = async () => {
+    const { dispatch } = this.props;
+    const token = localStorage.getItem('token');
+    console.log(token);
+    let questionsApi = await fetchQuestions(token);
+    // verifica se o token expirou
+    const expiredToken = 3;
+    if (questionsApi.response_code === expiredToken) {
+      // se ele expirou, realiza uma nova requisição de token
+      await dispatch(getTokenAPI());
+      const newToken = localStorage.getItem('token');
+      // realiza a requisição das questões com o novo token
+      questionsApi = await fetchQuestions(newToken);
     }
   }
 
@@ -24,7 +34,6 @@ class Game extends React.Component {
         <Header />
         <Question />
       </div>
-
     );
   }
 }
@@ -33,12 +42,8 @@ const mapStateToProps = (state) => ({
   isLoading: state.questions.isLoading,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getQuestions: (token) => dispatch(getQuestionsThunkApi(token)),
-});
-
 Game.propTypes = {
-  getQuestions: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, null)(Game);
