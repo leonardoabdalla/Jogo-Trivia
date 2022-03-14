@@ -6,13 +6,13 @@ import Answer from '../Answer';
 class Question extends Component {
   render() {
     const { questions } = this.props;
-    const questArray = questions;
-    return (
-      <div>
-        { questArray
-          .map((answer, index) => (<Answer key={ index } question={ answer } />)) }
-      </div>
-    );
+    const questArray = Object.values(questions);
+    if (questArray.length > 0) {
+      return (<Answer
+        question={ questArray[0] }
+      />);
+    }
+    return (<h1> Loading </h1>);
   }
 }
 const mapStateToProps = (state) => ({
