@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import './Answer.css';
 
 class Answer extends Component {
@@ -20,8 +22,8 @@ class Answer extends Component {
   }
 
   render() {
-    const { question } = this.props;
-
+    const { question, counter } = this.props;
+    console.log(counter);
     return (
       <div>
         <h2 data-testid="question-category">{ question.category }</h2>
@@ -53,8 +55,14 @@ class Answer extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  questions: state.questions.questions,
+});
+
 Answer.propTypes = {
   question: PropTypes.string.isRequired,
+  counter: PropTypes.number.isRequired,
 };
 
-export default Answer;
+export default connect(mapStateToProps, null)(Answer);
