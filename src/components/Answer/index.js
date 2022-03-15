@@ -58,6 +58,7 @@ class Answer extends Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.questions,
+  counter: state.counter.counter,
 });
 
 Answer.propTypes = {
