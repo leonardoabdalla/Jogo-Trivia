@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './Answer.css';
 
 class Answer extends Component {
   randomAnswers = () => {
@@ -7,6 +8,15 @@ class Answer extends Component {
     const arrayAnswers = [question.correct_answer, ...question.incorrect_answers];
     const randomAnswers = arrayAnswers.sort(() => Math.random() - Number('0.5'));
     return randomAnswers;
+  }
+
+  changeColor = () => {
+    const correta = document.getElementById('correct-answer');
+    correta.className = 'correct-answer';
+    const erradas = document.querySelectorAll('.wrong-answer');
+    for (let i = 0; i < erradas.length; i += 1) {
+      erradas[i].className = 'wrong';
+    }
   }
 
   render() {
@@ -23,6 +33,8 @@ class Answer extends Component {
                 <button
                   type="button"
                   data-testid="correct-answer"
+                  id="correct-answer"
+                  onClick={ this.changeColor }
                 >
                   { answer }
                 </button>)
@@ -30,6 +42,8 @@ class Answer extends Component {
                 <button
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
+                  className="wrong-answer"
+                  onClick={ this.changeColor }
                 >
                   { answer }
                 </button>)
