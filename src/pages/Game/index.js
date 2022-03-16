@@ -6,6 +6,7 @@ import Question from '../../components/Question';
 import Header from '../Header';
 import { fetchQuestions } from '../../services/Api';
 import { getTokenAPI } from '../../redux/actions';
+import '../../components/Answer/Answer.css';
 
 class Game extends React.Component {
   componentDidMount = async () => {

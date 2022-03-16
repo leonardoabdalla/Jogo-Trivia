@@ -6,6 +6,18 @@ export const GET_QUESTIONS_FAILED = 'GET_QUESTIONS_FAILED';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const REQUEST_TOKEN_SUCESS = 'REQUEST_TOKEN_SUCESS';
 export const REQUEST_TOKEN_FAIL = 'REQUEST_TOKEN_FAIL';
+export const COUNTER = 'COUNTER';
+export const GET_BUTTON = 'GET_BUTTON';
+
+export const getButton = (disableButton) => ({
+  type: GET_BUTTON,
+  disableButton,
+});
+
+export const getCounter = (counter) => ({
+  type: COUNTER,
+  counter,
+});
 
 export const getToken = (payload) => ({
   type: GET_TOKEN,
