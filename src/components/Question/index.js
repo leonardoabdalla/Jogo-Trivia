@@ -31,6 +31,9 @@ class Question extends Component {
     }
     if (counter === 0) {
       clearInterval(myTimer);
+      this.setState({
+        counter: 0,
+      });
       const correta = document.getElementById('correct-answer');
       correta.className = 'correct-answer';
       const erradas = document.querySelectorAll('.wrong-answer');
@@ -43,7 +46,7 @@ class Question extends Component {
   }
 
   render() {
-    const { counter } = this.state;
+    const { counter, myTimer } = this.state;
     const { questions } = this.props;
     const questArray = Object.values(questions);
     if (questArray.length > 0) {
@@ -51,6 +54,7 @@ class Question extends Component {
         <>
           <Answer
             question={ questArray[0] }
+            myTimer={ myTimer }
           />
           <p>{counter}</p>
 

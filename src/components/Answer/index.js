@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import './Answer.css';
+import { getCounter } from '../../redux/actions';
 
 class Answer extends Component {
   constructor() {
@@ -24,15 +25,17 @@ class Answer extends Component {
     return randomAnswers;
   }
 
-  changeColor = () => {
+  changeColor = (answer) => {
+    console.log(answer);
     const correta = document.getElementById('correct-answer');
     correta.className = 'correct-answer';
     const erradas = document.querySelectorAll('.wrong-answer');
     for (let i = 0; i < erradas.length; i += 1) {
       erradas[i].className = 'wrong';
     }
-    const { counter } = this.props;
-    console.log(counter);
+    const { myTimer, dispatch } = this.props;
+    clearInterval(myTimer);
+    dispatch(getCounter(0));
   }
 
   render() {
@@ -50,7 +53,7 @@ class Answer extends Component {
                   type="button"
                   data-testid="correct-answer"
                   id="correct-answer"
-                  onClick={ this.changeColor }
+                  onClick={ () => this.changeColor({ answer }) }
                   disabled={ button }
                 >
                   { answer }
@@ -61,7 +64,7 @@ class Answer extends Component {
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
                   className="wrong-answer"
-                  onClick={ this.changeColor }
+                  onClick={ () => this.changeColor({ answer }) }
                   disabled={ button }
                 >
                   { answer }
@@ -84,6 +87,7 @@ Answer.propTypes = {
   question: PropTypes.string.isRequired,
   counter: PropTypes.number.isRequired,
   button: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Answer);
