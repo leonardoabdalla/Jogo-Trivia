@@ -5,6 +5,18 @@ import { connect } from 'react-redux';
 import './Answer.css';
 
 class Answer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      randomQuestion: [],
+    };
+  }
+
+  componentDidMount() {
+    const { question } = this.props;
+    this.setState({ randomQuestion: this.randomAnswers(question) });
+  }
+
   randomAnswers = () => {
     const { question } = this.props;
     const arrayAnswers = [question.correct_answer, ...question.incorrect_answers];
@@ -22,14 +34,14 @@ class Answer extends Component {
   }
 
   render() {
-    const { question, counter } = this.props;
-    console.log(counter);
+    const { question, button } = this.props;
+    const { randomQuestion } = this.state;
     return (
       <div>
         <h2 data-testid="question-category">{ question.category }</h2>
         <h3 data-testid="question-text">{ question.question }</h3>
         <div data-testid="answer-options">
-          { this.randomAnswers(question).map((answer, index) => (
+          {randomQuestion.map((answer, index) => (
             question.correct_answer === answer
               ? (
                 <button
@@ -37,19 +49,23 @@ class Answer extends Component {
                   data-testid="correct-answer"
                   id="correct-answer"
                   onClick={ this.changeColor }
+                  disabled={ button }
                 >
                   { answer }
-                </button>)
+                </button>
+              )
               : (
                 <button
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
                   className="wrong-answer"
                   onClick={ this.changeColor }
+                  disabled={ button }
                 >
                   { answer }
-                </button>)
-          )) }
+                </button>
+              )
+          ))}
         </div>
       </div>
     );
@@ -58,12 +74,14 @@ class Answer extends Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.questions,
-  counter: state.counter.counter,
+  counter: state.counter,
+  button: state.button.disableButton,
 });
 
 Answer.propTypes = {
   question: PropTypes.string.isRequired,
-  counter: PropTypes.number.isRequired,
+  // counter: PropTypes.number.isRequired,
+  button: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Answer);
