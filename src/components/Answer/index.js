@@ -31,6 +31,8 @@ class Answer extends Component {
     for (let i = 0; i < erradas.length; i += 1) {
       erradas[i].className = 'wrong';
     }
+    const { counter } = this.props;
+    console.log(counter);
   }
 
   render() {
@@ -80,7 +82,7 @@ const mapStateToProps = (state) => ({
 
 Answer.propTypes = {
   question: PropTypes.string.isRequired,
-  // counter: PropTypes.number.isRequired,
+  counter: PropTypes.number.isRequired,
   button: PropTypes.bool.isRequired,
 };
 

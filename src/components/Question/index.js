@@ -8,7 +8,7 @@ class Question extends Component {
   constructor() {
     super();
     this.state = {
-      counter: 30,
+      counter: 6,
       myTimer: 0,
     };
   }
@@ -65,5 +65,6 @@ const mapStateToProps = (state) => ({
 });
 Question.propTypes = {
   questions: PropTypes.objectOf.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps)(Question);
