@@ -5,6 +5,11 @@ import { connect } from 'react-redux';
 import './Answer.css';
 import { getCounter } from '../../redux/actions';
 
+const dificulties = {
+  easy: 1,
+  medium: 2,
+  hard: 3,
+};
 class Answer extends Component {
   constructor() {
     super();
@@ -25,17 +30,23 @@ class Answer extends Component {
     return randomAnswers;
   }
 
-  changeColor = (answer) => {
-    console.log(answer);
+  changeColor = () => {
     const correta = document.getElementById('correct-answer');
     correta.className = 'correct-answer';
     const erradas = document.querySelectorAll('.wrong-answer');
     for (let i = 0; i < erradas.length; i += 1) {
       erradas[i].className = 'wrong';
     }
-    const { myTimer, dispatch } = this.props;
-    clearInterval(myTimer);
-    dispatch(getCounter(0));
+  }
+
+  counterQuestions = (answer) => {
+    const botaoClicado = answer.target;
+    const { counter, question, dispatch } = this.props;
+    const BASE_SCORE = 10;
+    if (botaoClicado.id === 'correct-answer') {
+      const score = BASE_SCORE + (counter * dificulties[question.difficulty]);
+      dispatch(getCounter(score));
+    }
   }
 
   render() {
