@@ -8,7 +8,7 @@ class Question extends Component {
   constructor() {
     super();
     this.state = {
-      counter: 6,
+      counter: 30,
       myTimer: 0,
     };
   }
@@ -35,7 +35,7 @@ class Question extends Component {
         counter: 0,
       });
       const correta = document.getElementById('correct-answer');
-      correta.className = 'correct-answer';
+      correta.className = 'correct';
       const erradas = document.querySelectorAll('.wrong-answer');
       for (let i = 0; i < erradas.length; i += 1) {
         erradas[i].className = 'wrong';
@@ -46,7 +46,7 @@ class Question extends Component {
   }
 
   render() {
-    const { counter, myTimer } = this.state;
+    const { counter } = this.state;
     const { questions } = this.props;
     const questArray = Object.values(questions);
     if (questArray.length > 0) {
@@ -54,7 +54,6 @@ class Question extends Component {
         <>
           <Answer
             question={ questArray[0] }
-            myTimer={ myTimer }
           />
           <p>{counter}</p>
 
