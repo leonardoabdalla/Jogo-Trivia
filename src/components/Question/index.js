@@ -2,51 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Answer from '../Answer';
-import { getCounter, getButton } from '../../redux/actions';
+import Timer from '../Timer';
 
 class Question extends Component {
-  constructor() {
-    super();
-    this.state = {
-      counter: 6,
-      myTimer: 0,
-    };
-  }
-
-  componentDidMount = () => {
-    const ONE_SECOND = 1000;
-    const counter = setInterval(this.counter, ONE_SECOND);
-    this.setState({
-      myTimer: counter,
-    });
-  }
-
-  counter = () => {
-    const { dispatch } = this.props;
-    const { counter, myTimer } = this.state;
-    if (counter !== 0) {
-      this.setState({
-        counter: counter - 1,
-      }, () => dispatch(getCounter(counter)));
-    }
-    if (counter === 0) {
-      clearInterval(myTimer);
-      this.setState({
-        counter: 0,
-      });
-      const correta = document.getElementById('correct-answer');
-      correta.className = 'correct-answer';
-      const erradas = document.querySelectorAll('.wrong-answer');
-      for (let i = 0; i < erradas.length; i += 1) {
-        erradas[i].className = 'wrong';
-      }
-      this.setState({
-      }, () => dispatch(getButton({ disableButton: true })));
-    }
-  }
-
   render() {
-    const { counter, myTimer } = this.state;
     const { questions } = this.props;
     const questArray = Object.values(questions);
     if (questArray.length > 0) {
@@ -54,9 +13,8 @@ class Question extends Component {
         <>
           <Answer
             question={ questArray[0] }
-            myTimer={ myTimer }
           />
-          <p>{counter}</p>
+          <Timer />
 
         </>
       );
@@ -69,6 +27,5 @@ const mapStateToProps = (state) => ({
 });
 Question.propTypes = {
   questions: PropTypes.objectOf.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps)(Question);

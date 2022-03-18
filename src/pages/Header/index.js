@@ -29,7 +29,7 @@ class Header extends Component {
     );
   }
 }
-const mapStateToProps = ({ user:
+const mapStateToProps = ({ player:
   { gravatarEmail: { name, email }, score } }) => ({
   name,
   email,
