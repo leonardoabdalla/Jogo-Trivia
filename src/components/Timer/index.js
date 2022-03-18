@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCounter, getButton } from '../../redux/actions';
+import { getCounter, getButton, setCounter } from '../../redux/actions';
 
 class Timer extends Component {
   componentDidMount = () => {
+    const { dispatch } = this.props;
     const ONE_SECOND = 1000;
     this.myTimer = setInterval(this.counter, ONE_SECOND);
+    dispatch(setCounter());
   }
 
   componentWillUnmount() {

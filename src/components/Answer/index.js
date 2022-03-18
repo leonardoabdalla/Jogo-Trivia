@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getScore } from '../../redux/actions';
 
 import './Answer.css';
+import Timer from '../Timer';
 
 const difficulties = {
   easy: 1,
@@ -16,6 +17,7 @@ class Answer extends Component {
     super();
     this.state = {
       randomQuestion: [],
+      isDisable: true,
     };
   }
 
@@ -24,11 +26,16 @@ class Answer extends Component {
     this.setState({ randomQuestion: this.randomAnswers(question) });
   }
 
-  randomAnswers = () => {
-    const { question } = this.props;
+  randomAnswers = (question) => {
+    // const { question } = this.props;
     const arrayAnswers = [question.correct_answer, ...question.incorrect_answers];
     const randomAnswers = arrayAnswers.sort(() => Math.random() - Number('0.5'));
     return randomAnswers;
+  }
+
+  handleNextButton = () => {
+    const { handleQuestion } = this.props;
+    handleQuestion();
   }
 
   changeColor = (answer) => {
@@ -40,6 +47,7 @@ class Answer extends Component {
     }
     const verifyAnswer = answer.target;
     const BASE_CALCULATOR = 10;
+    this.setState({ isDisable: false });
     if (verifyAnswer.className === 'correct') {
       const { dispatch, counter, question } = this.props;
       const points = BASE_CALCULATOR + (counter * difficulties[question.difficulty]);
@@ -52,7 +60,7 @@ class Answer extends Component {
 
   render() {
     const { question, button } = this.props;
-    const { randomQuestion } = this.state;
+    const { randomQuestion, isDisable } = this.state;
     return (
       <div>
         <h2 data-testid="question-category">{ question.category }</h2>
@@ -84,6 +92,17 @@ class Answer extends Component {
               )
           ))}
         </div>
+        <Timer />
+        { !isDisable
+        && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            className="btn-next"
+            onClick={ this.handleNextButton }
+          >
+            Próxima
+          </button>)}
       </div>
     );
   }
@@ -94,6 +113,8 @@ const mapStateToProps = (state) => ({
   counter: state.counter,
   button: state.button.disableButton,
   score: state.player.score,
+  currentQuestion: state.player.currentQuestion,
+  totalQuestions: state.player.totalQuestions,
 });
 
 Answer.propTypes = {
@@ -101,6 +122,7 @@ Answer.propTypes = {
   counter: PropTypes.number.isRequired,
   button: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  handleQuestion: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Answer);
+export default connect(mapStateToProps)(Answer);
