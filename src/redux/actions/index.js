@@ -10,6 +10,12 @@ export const COUNTER = 'COUNTER';
 export const GET_BUTTON = 'GET_BUTTON';
 export const SCORE = 'SCORE';
 export const SET_COUNTER = 'SET_COUNTER';
+export const ASSERTION = 'ASSERTION';
+
+export const setAssertions = (assertions) => ({
+  type: ASSERTION,
+  assertions,
+});
 
 export const setCounter = (payload) => ({
   type: SET_COUNTER,
