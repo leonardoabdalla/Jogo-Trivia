@@ -26,14 +26,14 @@ class Game extends React.Component {
   }
 
   render() {
-    const { isLoading } = this.props;
+    const { isLoading, history } = this.props;
     if (isLoading) {
       return (<Header />);
     }
     return (
       <div>
         <Header />
-        <Question />
+        <Question history={ history } />
       </div>
     );
   }
@@ -46,5 +46,6 @@ const mapStateToProps = (state) => ({
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 export default connect(mapStateToProps, null)(Game);

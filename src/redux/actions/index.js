@@ -9,6 +9,12 @@ export const REQUEST_TOKEN_FAIL = 'REQUEST_TOKEN_FAIL';
 export const COUNTER = 'COUNTER';
 export const GET_BUTTON = 'GET_BUTTON';
 export const SCORE = 'SCORE';
+export const SET_COUNTER = 'SET_COUNTER';
+
+export const setCounter = (payload) => ({
+  type: SET_COUNTER,
+  payload,
+});
 
 export const getButton = (disableButton) => ({
   type: GET_BUTTON,
