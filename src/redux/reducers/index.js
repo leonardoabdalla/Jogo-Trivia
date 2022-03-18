@@ -7,7 +7,7 @@ import counterReducer from './counterReducer';
 import buttonReducer from './buttonReducer';
 
 const rootReducer = combineReducers({
-  user: loginReducer,
+  player: loginReducer,
   token: tokenReducer,
   questions: questionsReducer,
   counter: counterReducer,

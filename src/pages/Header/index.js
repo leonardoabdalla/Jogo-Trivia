@@ -16,6 +16,7 @@ class Header extends Component {
 
   render() {
     const { name, score } = this.props;
+    console.log(typeof score);
     return (
       <header>
         <img
@@ -29,7 +30,7 @@ class Header extends Component {
     );
   }
 }
-const mapStateToProps = ({ user:
+const mapStateToProps = ({ player:
   { gravatarEmail: { name, email }, score } }) => ({
   name,
   email,

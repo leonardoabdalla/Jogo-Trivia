@@ -1,46 +1,50 @@
-// import React, { Component } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getCounter, getButton } from '../../redux/actions';
 
-// class Timer extends Component {
-//   constructor() {
-//     super();
+class Timer extends Component {
+  componentDidMount = () => {
+    const ONE_SECOND = 1000;
+    this.myTimer = setInterval(this.counter, ONE_SECOND);
+  }
 
-//     this.state = {
-//       counter: 30000,
-//     };
+  componentWillUnmount() {
+    clearInterval(this.myTimer);
+  }
 
-//     this.timer = null;
-//   }
+  counter = () => {
+    const { dispatch, counter } = this.props;
+    if (counter !== 0) {
+      dispatch(getCounter());
+    }
+    if (counter === 0) {
+      clearInterval(this.myTimer);
+      const correta = document.getElementById('correct-answer');
+      correta.className = 'correct';
+      const erradas = document.querySelectorAll('.wrong-answer');
+      for (let i = 0; i < erradas.length; i += 1) {
+        erradas[i].className = 'wrong';
+      }
+      dispatch(getButton({ disableButton: true }));
+    }
+  }
 
-//   componentDidMount() {
-//     const ONE_SECOND = 1000;
-//     this.timer = setInterval(
-//       () => this.setState((prevState) => ({ counter: prevState.counter - 1 })),
-//       ONE_SECOND,
-//     );
-//   }
+  render() {
+    const { counter } = this.props;
+    return (
+      <h1>{counter}</h1>
+    );
+  }
+}
 
-//   componentDidUpdate(prevProps, prevState) {
-//     const TIME_LIMIT = 0;
+Timer.propTypes = {
+  counter: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
-//     const { counter } = prevState;
+const mapStateToProps = (state) => ({
+  counter: state.counter,
+});
 
-//     if (counter === TIME_LIMIT) {
-//       this.setState({
-//         counter: 30000,
-//       });
-//     }
-//   }
-
-//   componentWillUnmount() {
-//     console.log('Desmonatando o componente');
-//     clearInterval(this.timer);
-//   }
-
-//   render() {
-//     return (
-//       <h1>Timer</h1>
-//     );
-//   }
-// }
-
-// export default Timer;
+export default connect(mapStateToProps, null)(Timer);

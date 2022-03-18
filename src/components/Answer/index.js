@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getScore } from '../../redux/actions';
 
 import './Answer.css';
+
+const difficulties = {
+  easy: 1,
+  medium: 2,
+  hard: 3,
+};
 
 class Answer extends Component {
   constructor() {
@@ -24,15 +31,23 @@ class Answer extends Component {
     return randomAnswers;
   }
 
-  changeColor = () => {
+  changeColor = (answer) => {
     const correta = document.getElementById('correct-answer');
-    correta.className = 'correct-answer';
+    correta.className = 'correct';
     const erradas = document.querySelectorAll('.wrong-answer');
     for (let i = 0; i < erradas.length; i += 1) {
       erradas[i].className = 'wrong';
     }
-    const { counter } = this.props;
-    console.log(counter);
+    const verifyAnswer = answer.target;
+    const BASE_CALCULATOR = 10;
+    if (verifyAnswer.className === 'correct') {
+      const { dispatch, counter, question } = this.props;
+      const points = BASE_CALCULATOR + (counter * difficulties[question.difficulty]);
+      dispatch(getScore(points));
+      localStorage.setItem('score', points);
+    } else {
+      console.log('nao entrou no if');
+    }
   }
 
   render() {
@@ -78,12 +93,14 @@ const mapStateToProps = (state) => ({
   questions: state.questions.questions,
   counter: state.counter,
   button: state.button.disableButton,
+  score: state.player.score,
 });
 
 Answer.propTypes = {
   question: PropTypes.string.isRequired,
   counter: PropTypes.number.isRequired,
   button: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Answer);
