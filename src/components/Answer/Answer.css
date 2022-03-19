@@ -1,6 +1,6 @@
 .correct {
   background-color: white;
-  border: none;
+  border: 3px solid  rgb(6, 240, 15);
   border-radius: 0.3em;
   box-shadow: 0 2px 5px  rgb(6, 240, 15);
   font-weight: 700;
@@ -11,7 +11,7 @@
 
 .wrong {
   background-color: white;
-  border: none;
+  border: 3px solid red;
   border-radius: 0.3em;
   box-shadow: 0 2px 5px red;
   font-weight: 700;
@@ -30,8 +30,8 @@
   gap: 1em;
   justify-content: space-between;
   margin: 8em auto;
-  padding: 2em 5em;
-  width: 50vw;
+  padding: 1em 10em;
+  width: 60vw;
 }
 
 .question-text {
@@ -57,27 +57,4 @@
   font-size: 1.5em;
   gap: 1em;
   margin: 0 15em;
-}
-
-.correct-answer-button {
-  align-items: center;
-  border: none;
-  border-radius: 0.3em;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0.8em 2em;
-  width: auto;
-
-}
-
-.wrong-answer {
-  align-items: center;
-  border: none;
-  border-radius: 0.3em;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0.8em 2em;
-  width: auto;
 }
