@@ -1,0 +1,42 @@
+.login-section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.login-form {
+  background: rgb(30, 161, 231);
+  border-radius: 0.7em;
+  box-shadow: 3px 3px 10px rgb(190, 97, 97);
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  justify-content: center;
+  margin-top: 180px;
+  padding: 3em 5em;
+  position: relative;
+}
+
+.settings-button {
+  color: rgb(56, 56, 56);
+  cursor: pointer;
+  font-size: 1.5em;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
+.img-login {
+  background-color: black;
+  display: grid;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+input {
+  border: none;
+}

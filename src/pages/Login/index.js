@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { MdSettings } from 'react-icons/md';
 import { getLogin, getTokenAPI } from '../../redux/actions/index';
 
+import logo from '../../img/trivia_back.png';
+
+import './style.css';
+
 class Login extends Component {
   constructor() {
     super();
@@ -42,42 +46,44 @@ class Login extends Component {
     const { name, email, buttonDisable } = this.state;
     const { history } = this.props;
     return (
-      <div>
-        <form>
-          <input
-            placeholder="Name"
-            data-testid="input-player-name"
-            type="text"
-            name="name"
-            value={ name }
-            onChange={ this.handleChange }
-          />
-          <input
-            placeholder="Email"
-            data-testid="input-gravatar-email"
-            type="email"
-            name="email"
-            value={ email }
-            onChange={ this.handleChange }
-          />
-          <button
-            type="button"
-            onClick={
-              this.goToGame
-            }
-            disabled={ !buttonDisable }
-            data-testid="btn-play"
-          >
-            Play
-          </button>
-          <div>
-            <MdSettings
-              data-testId="btn-settings"
-              onClick={ () => history.push('/settings') }
+      <>
+        <img className="img-login" src={ logo } alt="Trivia" />
+        <form className="login-section">
+          <div className="login-form">
+            <input
+              placeholder="Name "
+              data-testid="input-player-name"
+              type="text"
+              name="name"
+              value={ name }
+              onChange={ this.handleChange }
             />
+            <input
+              placeholder="Email"
+              data-testid="input-gravatar-email"
+              type="email"
+              name="email"
+              value={ email }
+              onChange={ this.handleChange }
+            />
+            <button
+              type="button"
+              onClick={ this.goToGame }
+              disabled={ !buttonDisable }
+              data-testid="btn-play"
+            >
+              Play
+            </button>
+            <div className="settings-button">
+              <MdSettings
+                data-testId="btn-settings"
+                onClick={ () => history.push('/settings') }
+              />
+            </div>
           </div>
         </form>
-      </div>
+
+      </>
     );
   }
 }
