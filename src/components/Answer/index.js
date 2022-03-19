@@ -27,7 +27,6 @@ class Answer extends Component {
   }
 
   randomAnswers = (question) => {
-    // const { question } = this.props;
     const arrayAnswers = [question.correct_answer, ...question.incorrect_answers];
     const randomAnswers = arrayAnswers.sort(() => Math.random() - Number('0.5'));
     return randomAnswers;
@@ -62,35 +61,44 @@ class Answer extends Component {
     const { question, button } = this.props;
     const { randomQuestion, isDisable } = this.state;
     return (
-      <div>
-        <h2 data-testid="question-category">{ question.category }</h2>
-        <h3 data-testid="question-text">{ question.question }</h3>
-        <div data-testid="answer-options">
-          {randomQuestion.map((answer, index) => (
-            question.correct_answer === answer
-              ? (
-                <button
-                  type="button"
-                  data-testid="correct-answer"
-                  id="correct-answer"
-                  onClick={ this.changeColor }
-                  disabled={ button }
-                >
-                  { answer }
-                </button>
-              )
-              : (
-                <button
-                  type="button"
-                  data-testid={ `wrong-answer-${index}` }
-                  className="wrong-answer"
-                  onClick={ this.changeColor }
-                  disabled={ button }
-                >
-                  { answer }
-                </button>
-              )
-          ))}
+      <div className="question">
+        <div className="question-header">
+          <h2 data-testid="question-category">{ question.category }</h2>
+          <h3
+            className="question-text"
+            data-testid="question-text"
+          >
+            { question.question }
+
+          </h3>
+          <div className="answers" data-testid="answer-options">
+            {randomQuestion.map((answer, index) => (
+              question.correct_answer === answer
+                ? (
+                  <button
+                    type="button"
+                    data-testid="correct-answer"
+                    id="correct-answer"
+                    onClick={ this.changeColor }
+                    disabled={ button }
+                    className="correct-answer-button"
+                  >
+                    { answer }
+                  </button>
+                )
+                : (
+                  <button
+                    type="button"
+                    data-testid={ `wrong-answer-${index}` }
+                    className="wrong-answer"
+                    onClick={ this.changeColor }
+                    disabled={ button }
+                  >
+                    { answer }
+                  </button>
+                )
+            ))}
+          </div>
         </div>
         <Timer />
         { !isDisable

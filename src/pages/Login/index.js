@@ -48,10 +48,10 @@ class Login extends Component {
     return (
       <>
         <img className="img-login" src={ logo } alt="Trivia" />
-        <div className="login-section">
-          <form className="login-form">
+        <form className="login-section">
+          <div className="login-form">
             <input
-              placeholder="Name"
+              placeholder="Name "
               data-testid="input-player-name"
               type="text"
               name="name"
@@ -80,8 +80,8 @@ class Login extends Component {
                 onClick={ () => history.push('/settings') }
               />
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
 
       </>
     );

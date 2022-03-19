@@ -3,6 +3,8 @@ import { MD5 } from 'crypto-js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import './style.css';
+
 class Header extends Component {
   getGravatar = () => {
     const { email } = this.props;
@@ -19,13 +21,19 @@ class Header extends Component {
     console.log(typeof score);
     return (
       <header>
-        <img
-          data-testid="header-profile-picture"
-          src={ this.getGravatar() }
-          alt="Foto do Perfil"
-        />
-        <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">{ score }</p>
+        <div className="header-container">
+          <div className="left-section">
+            <img
+              data-testid="header-profile-picture"
+              src={ this.getGravatar() }
+              alt="Foto do Perfil"
+            />
+          </div>
+          <h4 data-testid="header-player-name">{ name }</h4>
+          <div className="right-section">
+            <h3 data-testid="header-score">{ score }</h3>
+          </div>
+        </div>
       </header>
     );
   }
