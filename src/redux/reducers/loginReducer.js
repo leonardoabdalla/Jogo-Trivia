@@ -1,4 +1,4 @@
-import { LOGIN, SCORE } from '../actions';
+import { LOGIN, SCORE, ASSERTION } from '../actions';
 
 const INITIAL_STATE = {
   gravatarEmail: '',
@@ -19,6 +19,11 @@ function loginReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       score: state.score + action.score,
+    };
+  case ASSERTION:
+    return {
+      ...state,
+      assertions: state.assertions + action.assertions,
     };
   default:
     return state;

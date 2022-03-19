@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getScore } from '../../redux/actions';
+import { getScore, setAssertions } from '../../redux/actions';
 
 import './Answer.css';
 import Timer from '../Timer';
@@ -38,6 +38,7 @@ class Answer extends Component {
   }
 
   changeColor = (answer) => {
+    const { dispatch } = this.props;
     const correta = document.getElementById('correct-answer');
     correta.className = 'correct';
     const erradas = document.querySelectorAll('.wrong-answer');
@@ -48,9 +49,10 @@ class Answer extends Component {
     const BASE_CALCULATOR = 10;
     this.setState({ isDisable: false });
     if (verifyAnswer.className === 'correct') {
-      const { dispatch, counter, question } = this.props;
+      const { counter, question } = this.props;
       const points = BASE_CALCULATOR + (counter * difficulties[question.difficulty]);
       dispatch(getScore(points));
+      dispatch(setAssertions(1));
       localStorage.setItem('score', points);
     } else {
       console.log('nao entrou no if');
