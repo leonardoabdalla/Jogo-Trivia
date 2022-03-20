@@ -22,11 +22,9 @@ class Feedback extends React.Component {
             ? <p data-testid="feedback-text">Could be better...</p>
             : <p data-testid="feedback-text">Well Done!</p>}
           <p data-testid="feedback-total-score">
-            {'Points: '}
             {score}
           </p>
           <p data-testid="feedback-total-question">
-            {'Correct answers: '}
             {assertions}
           </p>
           <Link to="/">
