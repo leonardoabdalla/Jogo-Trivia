@@ -13,6 +13,7 @@ class Header extends Component {
       .toLowerCase()
       .trim();
     const gravatarEmail = `https://www.gravatar.com/avatar/${gravatarHash}`;
+    localStorage.setItem('picture', gravatarEmail);
     return gravatarEmail;
   }
 
